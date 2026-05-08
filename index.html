@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReelMethod Longevity Calculator</title>
+  <meta name="description" content="An educational longevity estimator based on common lifestyle and health factors." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>ReelMethod Longevity Calculator</h1>
+      <p class="tagline">Estimate your life expectancy from lifestyle, body, and wellbeing factors.</p>
+      <p class="disclaimer-pill" role="note">Educational only &mdash; not medical advice</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <form id="longevity-form" novalidate aria-describedby="form-intro">
+      <p id="form-intro" class="form-intro">
+        Answer honestly for the most useful estimate. Each factor adjusts a baseline life expectancy up or down.
+      </p>
+
+      <fieldset class="card">
+        <legend>Demographics</legend>
+        <div class="grid">
+          <label class="field">
+            <span>Current age</span>
+            <input type="number" name="age" min="0" max="120" step="1" required inputmode="numeric" />
+            <small class="error" data-error-for="age"></small>
+          </label>
+          <label class="field">
+            <span>Sex assigned at birth</span>
+            <select name="sex" required>
+              <option value="">Select&hellip;</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+            <small class="error" data-error-for="sex"></small>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>Lifestyle</legend>
+        <div class="grid">
+          <label class="field">
+            <span>Smoking</span>
+            <select name="smoking" required>
+              <option value="never">Never smoked</option>
+              <option value="former">Former smoker (quit &gt;1 yr ago)</option>
+              <option value="light">Current light smoker</option>
+              <option value="heavy">Current heavy smoker</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Alcohol</span>
+            <select name="alcohol" required>
+              <option value="none">None or rare</option>
+              <option value="light">Light (a few drinks/week)</option>
+              <option value="moderate">Moderate (daily drink)</option>
+              <option value="heavy">Heavy (multiple/day)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Exercise</span>
+            <select name="exercise" required>
+              <option value="sedentary">Sedentary</option>
+              <option value="light">Light activity</option>
+              <option value="moderate">Moderate (3-4x/week)</option>
+              <option value="vigorous">Vigorous regular (5+/week)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Diet quality</span>
+            <select name="diet" required>
+              <option value="poor">Poor (highly processed)</option>
+              <option value="average">Average (mixed)</option>
+              <option value="good">Good (whole foods, plant-forward)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Average sleep</span>
+            <select name="sleep" required>
+              <option value="short">Less than 6 hours</option>
+              <option value="ideal">7-9 hours</option>
+              <option value="long">More than 10 hours</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>Body</legend>
+        <div class="grid">
+          <label class="field">
+            <span>Height (cm)</span>
+            <input type="number" name="height" min="80" max="250" step="0.1" required inputmode="decimal" />
+            <small class="error" data-error-for="height"></small>
+          </label>
+          <label class="field">
+            <span>Weight (kg)</span>
+            <input type="number" name="weight" min="20" max="400" step="0.1" required inputmode="decimal" />
+            <small class="error" data-error-for="weight"></small>
+          </label>
+          <div class="field bmi-display" aria-live="polite">
+            <span>BMI</span>
+            <output id="bmi-output">&mdash;</output>
+            <small id="bmi-category"></small>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>Health</legend>
+        <p class="hint">Check any that currently apply.</p>
+        <div class="checkbox-grid">
+          <label class="checkbox">
+            <input type="checkbox" name="conditions" value="hypertension" />
+            <span>Untreated high blood pressure</span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" name="conditions" value="diabetes" />
+            <span>Diabetes</span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" name="conditions" value="heart" />
+            <span>Heart disease history</span>
+          </label>
+        </div>
+        <label class="field">
+          <span>Preventive care</span>
+          <select name="preventive" required>
+            <option value="regular">Regular checkups</option>
+            <option value="occasional">Occasional</option>
+            <option value="none">None</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>Wellbeing</legend>
+        <div class="grid">
+          <label class="field">
+            <span>Stress level</span>
+            <select name="stress" required>
+              <option value="low">Low</option>
+              <option value="moderate">Moderate</option>
+              <option value="high">High &amp; chronic</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Social connection</span>
+            <select name="social" required>
+              <option value="strong">Strong (close friends/family)</option>
+              <option value="moderate">Moderate</option>
+              <option value="isolated">Isolated</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Sense of purpose</span>
+            <select name="purpose" required>
+              <option value="high">High (work/hobbies/community)</option>
+              <option value="low">Low or unclear</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Calculate</button>
+        <button type="reset" class="btn btn-ghost">Reset</button>
+      </div>
+    </form>
+
+    <section id="results" class="results card hidden" aria-live="polite" tabindex="-1">
+      <header class="results-header">
+        <p class="results-label">Estimated life expectancy</p>
+        <p class="results-value"><span id="estimate">&mdash;</span> <span class="unit">years</span></p>
+        <p class="results-sub"><span id="years-remaining">&mdash;</span> years remaining from your current age</p>
+      </header>
+
+      <div class="breakdown">
+        <h2>What's moving the needle</h2>
+        <ul id="factor-list" class="factor-list"></ul>
+      </div>
+
+      <button type="button" id="recalc" class="btn btn-ghost">Recalculate</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        This calculator is for self-reflection and education. It is not a clinical tool and should not replace
+        guidance from a qualified healthcare provider. Numbers come from population averages and well-known
+        epidemiological factors; individual results vary.
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
