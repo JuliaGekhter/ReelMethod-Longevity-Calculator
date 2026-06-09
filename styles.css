@@ -419,3 +419,119 @@ legend {
     width: 100%;
   }
 }
+
+/* ── Scholarship eligibility checker ───────────────────────────────── */
+
+a.btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.keydates {
+  margin-bottom: var(--space-5);
+}
+
+.keydates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-4);
+}
+
+.keydate {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.keydate-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.keydate-value {
+  font-size: 1.1rem;
+}
+
+.keydate-note {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.verdict {
+  text-align: center;
+  padding: var(--space-5);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: var(--space-6);
+}
+
+.verdict.eligible {
+  background: var(--positive-soft);
+  border-color: var(--positive);
+}
+
+.verdict.ineligible {
+  background: var(--negative-soft);
+  border-color: var(--negative);
+}
+
+.verdict-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: var(--space-2);
+}
+
+.verdict.eligible .verdict-icon {
+  background: var(--positive);
+}
+
+.verdict.ineligible .verdict-icon {
+  background: var(--negative);
+}
+
+.verdict-title {
+  margin: 0 0 var(--space-1);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.verdict-sub {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.next-steps {
+  margin-top: var(--space-5);
+}
+
+.next-steps h2 {
+  font-size: 1.05rem;
+  margin: 0 0 var(--space-3);
+}
+
+.steps {
+  margin: 0 0 var(--space-5);
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--text);
+}

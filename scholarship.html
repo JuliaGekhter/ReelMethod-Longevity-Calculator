@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scholarship Eligibility Checker</title>
+  <meta name="description" content="A self-service checker that tells you whether you appear eligible to apply for this year's scholarships before you submit." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Scholarship Eligibility Checker</h1>
+      <p class="tagline">Answer a few quick questions to see whether you appear eligible to apply &mdash; before you submit.</p>
+      <p class="disclaimer-pill" role="note">Unofficial self-check &mdash; not an eligibility determination</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card keydates" aria-label="Key dates">
+      <div class="keydates-grid">
+        <div class="keydate">
+          <span class="keydate-label">Application deadline</span>
+          <strong class="keydate-value">June 19, 2026</strong>
+          <small id="countdown" class="keydate-note" aria-live="polite">&mdash;</small>
+        </div>
+        <div class="keydate">
+          <span class="keydate-label">Winners notified by</span>
+          <strong class="keydate-value">July 20, 2026</strong>
+        </div>
+        <div class="keydate">
+          <span class="keydate-label">Award applies to</span>
+          <strong class="keydate-value">Fall 2026 semester</strong>
+        </div>
+      </div>
+    </section>
+
+    <form id="eligibility-form" novalidate aria-describedby="form-intro">
+      <p id="form-intro" class="form-intro">
+        This check asks for <strong>no identifying information</strong> and stores nothing. Each answer is matched against
+        the published eligibility rules. A final determination is made by the University.
+      </p>
+
+      <fieldset class="card">
+        <legend>This year&rsquo;s application</legend>
+        <div class="grid">
+          <label class="field">
+            <span>How many of this year&rsquo;s nine scholarships are you applying to?</span>
+            <select name="count" required>
+              <option value="">Select&hellip;</option>
+              <option value="one">Just one</option>
+              <option value="multiple">More than one</option>
+            </select>
+            <small class="hint">You may apply for only one scholarship per year.</small>
+            <small class="error" data-error-for="count"></small>
+          </label>
+          <label class="field">
+            <span>Have you previously won this specific scholarship?</span>
+            <select name="wonBefore" required>
+              <option value="">Select&hellip;</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+            <small class="hint">Each scholarship can be won only once in a lifetime.</small>
+            <small class="error" data-error-for="wonBefore"></small>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>Enrollment</legend>
+        <div class="grid">
+          <label class="field">
+            <span>Will you be registered before the start of the Fall 2026 semester?</span>
+            <select name="register" required>
+              <option value="">Select&hellip;</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <small class="hint">Registration must be complete before the semester begins.</small>
+            <small class="error" data-error-for="register"></small>
+          </label>
+          <label class="field">
+            <span>Will you be enrolled in courses during the Fall 2026 semester?</span>
+            <select name="enroll" required>
+              <option value="">Select&hellip;</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <small class="hint">The award is applied to your student account for that semester.</small>
+            <small class="error" data-error-for="enroll"></small>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>Submission</legend>
+        <div class="grid">
+          <label class="field">
+            <span>Will you submit through the official Scholarship Application Submission Form by the deadline?</span>
+            <select name="form" required>
+              <option value="">Select&hellip;</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <small class="hint">Applications are accepted only through the official form, by June 19, 2026.</small>
+            <small class="error" data-error-for="form"></small>
+          </label>
+          <label class="field">
+            <span>Will your uploaded application be free of any identifying information?</span>
+            <select name="anonymous" required>
+              <option value="">Select&hellip;</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <small class="hint">Contact details go on the form only. Identifying info in the upload means disqualification.</small>
+            <small class="error" data-error-for="anonymous"></small>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>Permission</legend>
+        <div class="grid">
+          <label class="field">
+            <span>If you win, do you agree to have your name, information, and images shared publicly?</span>
+            <select name="publicity" required>
+              <option value="">Select&hellip;</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <small class="hint">Recipients agree to public recognition via the University&rsquo;s channels.</small>
+            <small class="error" data-error-for="publicity"></small>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Check eligibility</button>
+        <button type="reset" class="btn btn-ghost">Reset</button>
+      </div>
+    </form>
+
+    <section id="results" class="results card hidden" aria-live="polite" tabindex="-1">
+      <div id="verdict" class="verdict">
+        <span class="verdict-icon" id="verdict-icon" aria-hidden="true"></span>
+        <p class="verdict-title" id="verdict-title">&mdash;</p>
+        <p class="verdict-sub" id="verdict-sub">&mdash;</p>
+      </div>
+
+      <div class="breakdown">
+        <h2>Requirement check</h2>
+        <ul id="requirement-list" class="factor-list"></ul>
+      </div>
+
+      <div id="next-steps" class="next-steps"></div>
+
+      <button type="button" id="recheck" class="btn btn-ghost">Re-check</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        This tool is an unofficial self-check to help you prepare your application. It does not collect your information
+        and is not an official eligibility decision. You may consult the Saybrook University Writing Center to strengthen
+        your written submission. Questions? Email
+        <a href="mailto:Say-Scholarships@saybrook.edu">Say-Scholarships@saybrook.edu</a>.
+      </p>
+      <p><a href="index.html">&larr; Longevity calculator</a></p>
+    </div>
+  </footer>
+
+  <script src="scholarship.js"></script>
+</body>
+</html>
